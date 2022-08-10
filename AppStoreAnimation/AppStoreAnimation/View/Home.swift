@@ -8,10 +8,14 @@
 import SwiftUI
 
 struct Home: View {
+    //MARK: Animation Properties
+    @State var currentItem: Today?
+    @State var showDetailPage: Bool = false
+    
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
             
-            VStack(spacing: 30) {
+            VStack(spacing: 0) {
                 HStack(alignment: .bottom) {
                     VStack(alignment: .leading, spacing: 8){
                         Text("MONDAY 4 APRIL")
@@ -30,12 +34,18 @@ struct Home: View {
                     }
                 }
                 .padding(.horizontal)
+                .padding(.bottom)
                 
-                ForEach(todayItems){ today in
+                ForEach(todayItems){ item in
                     Button {
+                        withAnimation(.interactiveSpring(response: 0.6, dampingFraction: 0.7, blendDuration: 0.7)) {
+                            currentItem = item
+                            showDetailPage = true
+                        }
                         
                     } label: {
-                        CardView(item: today)
+                        CardView(item: item)
+                            .scaleEffect(currentItem?.id == item.id && showDetailPage ? 1:0.93)
                     }
                     .buttonStyle(ScaledButtonStyle())
 
@@ -43,6 +53,12 @@ struct Home: View {
             }
             .padding(.vertical)
         }
+        .overlay {
+            if let currentItem = currentItem, showDetailPage{
+                DetailView(item: currentItem)
+            }
+        }
+        
     }
     
     @ViewBuilder
@@ -120,6 +136,18 @@ struct Home: View {
                 .fill(Color("BG"))
         }
     }
+    
+    
+    //MARK: Detail View
+    func DetailView(item: Today) -> some View{
+        ScrollView(.vertical, showsIndicators: false) {
+            VStack{
+                CardView(item: item)
+            }
+        }
+    }
+    
+    
     
 }
 
