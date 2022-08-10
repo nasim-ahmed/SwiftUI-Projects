@@ -12,6 +12,13 @@ struct Home: View {
     @State var currentItem: Today?
     @State var showDetailPage: Bool = false
     
+    
+    //Matched Geometry Effect
+    @Namespace var animation
+    
+    //MARK:Detail Animation Properties
+    @State var animateView: Bool = false
+    
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
             
@@ -48,6 +55,7 @@ struct Home: View {
                             .scaleEffect(currentItem?.id == item.id && showDetailPage ? 1:0.93)
                     }
                     .buttonStyle(ScaledButtonStyle())
+                    .opacity(showDetailPage ? (currentItem?.id == item.id ? 1 : 0) : 1)
 
                 }
             }
@@ -56,7 +64,17 @@ struct Home: View {
         .overlay {
             if let currentItem = currentItem, showDetailPage{
                 DetailView(item: currentItem)
+                    .ignoresSafeArea(.container, edges: .top)
             }
+        }
+        
+        .background(alignment: .top){
+            RoundedRectangle(cornerRadius: 15, style: .continuous)
+                .fill(Color("BG"))
+                .frame(height: animateView ? nil: 350, alignment: .top)
+                .scaleEffect(animateView ? 1: 0.93)
+                .opacity(animateView ? 1: 0)
+                .ignoresSafeArea()
         }
         
     }
@@ -89,9 +107,10 @@ struct Home: View {
                     Text(item.bannerTitle)
                         .font(.largeTitle.bold())
                         .multilineTextAlignment(.leading)
-                }.padding()
-                    .foregroundColor(.primary)
-                
+                }
+                .padding()
+                .foregroundColor(.primary)
+                .offset(y: currentItem?.id == item.id && animateView ? safeArea().top: 0)
             }
             
             HStack(spacing: 12){
@@ -135,6 +154,7 @@ struct Home: View {
             RoundedRectangle(cornerRadius: 15, style: .continuous)
                 .fill(Color("BG"))
         }
+        .matchedGeometryEffect(id: item.id, in: animation)
     }
     
     
@@ -143,12 +163,17 @@ struct Home: View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack{
                 CardView(item: item)
+                    .scaleEffect(animateView ? 1: 0.93)
+            }
+        }
+        .transition(.identity)
+        .onAppear {
+            withAnimation(.interactiveSpring(response: 0.6, dampingFraction: 0.7, blendDuration: 0.7)) {
+                animateView = true
             }
         }
     }
-    
-    
-    
+
 }
 
 struct SwiftUIView_Previews: PreviewProvider {
@@ -163,7 +188,20 @@ struct ScaledButtonStyle: ButtonStyle{
             .scaleEffect(configuration.isPressed ? 0.94: 1)
             .animation(.easeInOut, value: configuration.isPressed)
     }
+}
 
+//Safe Area Value
+extension View{
+    func safeArea() -> UIEdgeInsets{
+        guard let screen = UIApplication.shared.connectedScenes.first as? UIWindowScene else{
+            return .zero
+        }
+        guard let safeArea = screen.windows.first?.safeAreaInsets else {
+            return .zero
+        }
+        
+        return safeArea
+    }
 }
 
 
