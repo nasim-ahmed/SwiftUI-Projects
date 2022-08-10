@@ -32,7 +32,13 @@ struct Home: View {
                 .padding(.horizontal)
                 
                 ForEach(todayItems){ today in
-                    CardView(item: today)
+                    Button {
+                        
+                    } label: {
+                        CardView(item: today)
+                    }
+                    .buttonStyle(ScaledButtonStyle())
+
                 }
             }
             .padding(.vertical)
@@ -66,7 +72,9 @@ struct Home: View {
                         .fontWeight(.semibold)
                     Text(item.bannerTitle)
                         .font(.largeTitle.bold())
+                        .multilineTextAlignment(.leading)
                 }.padding()
+                    .foregroundColor(.primary)
                 
             }
             
@@ -88,6 +96,7 @@ struct Home: View {
                         .foregroundColor(.gray)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
+                .foregroundColor(.primary)
                 
                 Button {
                     
@@ -104,14 +113,13 @@ struct Home: View {
                 }
 
             }
+            .padding([.horizontal, .bottom])
         }
         .background {
             RoundedRectangle(cornerRadius: 15, style: .continuous)
                 .fill(Color("BG"))
         }
-    
     }
-    
     
 }
 
@@ -120,3 +128,15 @@ struct SwiftUIView_Previews: PreviewProvider {
         Home().preferredColorScheme(.dark)
     }
 }
+
+struct ScaledButtonStyle: ButtonStyle{
+    func makeBody(configuration: Configuration) -> some View{
+        configuration.label
+            .scaleEffect(configuration.isPressed ? 0.94: 1)
+            .animation(.easeInOut, value: configuration.isPressed)
+    }
+
+}
+
+
+
