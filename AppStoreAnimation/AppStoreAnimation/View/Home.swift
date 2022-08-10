@@ -164,14 +164,63 @@ struct Home: View {
             VStack{
                 CardView(item: item)
                     .scaleEffect(animateView ? 1: 0.93)
+                
+                VStack(spacing: 15){
+                    //Dummy Text
+                    
+                    Text(dummyText)
+                        .multilineTextAlignment(.leading)
+                        .lineSpacing(10)
+                        .padding(.bottom, 20)
+                    Divider()
+                    Button {
+                        
+                    } label: {
+                        Label {
+                            Text("Share Story")
+                        } icon: {
+                            Image(systemName: "square.and.arrow.up.fill")
+                        }
+                        .foregroundColor(.primary)
+                        .padding(.vertical, 10)
+                        .padding(.horizontal, 25)
+                        .background {
+                             RoundedRectangle(cornerRadius: 5, style: .continuous)
+                                .fill(.ultraThinMaterial)
+                        }
+                    }
+                }.padding()
             }
         }
-        .transition(.identity)
+        
+        .overlay(alignment: .topTrailing, content: {
+            Button {
+                //Closing View
+                withAnimation(.interactiveSpring(response: 0.6, dampingFraction: 0.7, blendDuration: 0.7)){
+                    animateView = false
+                }
+                withAnimation(.interactiveSpring(response: 0.6, dampingFraction: 0.7, blendDuration: 0.7)){
+                    currentItem = nil
+                    showDetailPage = false
+                }
+            } label: {
+                Image(systemName: "xmark.circle.fill")
+                    .font(.title)
+                    .foregroundColor(.white)
+            }
+            .padding()
+            .padding(.top, safeArea().top)
+            .offset(y: -10)
+            .opacity(animateView ? 1 : 0)
+        })
+        
         .onAppear {
             withAnimation(.interactiveSpring(response: 0.6, dampingFraction: 0.7, blendDuration: 0.7)) {
                 animateView = true
             }
         }
+        
+        .transition(.identity)
     }
 
 }
