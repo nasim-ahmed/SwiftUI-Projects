@@ -12,16 +12,15 @@ struct Home: View {
     @State var currentItem: Today?
     @State var showDetailPage: Bool = false
     
-    
     //Matched Geometry Effect
     @Namespace var animation
     
     //MARK:Detail Animation Properties
     @State var animateView: Bool = false
+    @State var animateContent: Bool = false
     
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
-            
             VStack(spacing: 0) {
                 HStack(alignment: .bottom) {
                     VStack(alignment: .leading, spacing: 8){
@@ -42,6 +41,8 @@ struct Home: View {
                 }
                 .padding(.horizontal)
                 .padding(.bottom)
+                .opacity(showDetailPage ? 0 : 1)
+                
                 
                 ForEach(todayItems){ item in
                     Button {
@@ -189,7 +190,10 @@ struct Home: View {
                                 .fill(.ultraThinMaterial)
                         }
                     }
-                }.padding()
+                }
+                .padding()
+                .opacity(animateContent ? 1 : 0)
+                .scaleEffect(animateView ? 1 : 0, anchor: .top)
             }
         }
         
@@ -198,6 +202,7 @@ struct Home: View {
                 //Closing View
                 withAnimation(.interactiveSpring(response: 0.6, dampingFraction: 0.7, blendDuration: 0.7)){
                     animateView = false
+                    animateContent = false
                 }
                 withAnimation(.interactiveSpring(response: 0.6, dampingFraction: 0.7, blendDuration: 0.7)){
                     currentItem = nil
@@ -217,6 +222,10 @@ struct Home: View {
         .onAppear {
             withAnimation(.interactiveSpring(response: 0.6, dampingFraction: 0.7, blendDuration: 0.7)) {
                 animateView = true
+            }
+            
+            withAnimation(.interactiveSpring(response: 0.6, dampingFraction: 0.7, blendDuration: 0.7).delay(0.1)) {
+                animateContent = true
             }
         }
         
