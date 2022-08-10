@@ -18,6 +18,7 @@ struct Home: View {
     //MARK:Detail Animation Properties
     @State var animateView: Bool = false
     @State var animateContent: Bool = false
+    @State var scrollOffset: CGFloat = 0
     
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
@@ -195,7 +196,10 @@ struct Home: View {
                 .opacity(animateContent ? 1 : 0)
                 .scaleEffect(animateView ? 1 : 0, anchor: .top)
             }
+            .offset(y: scrollOffset > 0 ? -scrollOffset : 0)
+            .offset(offset: $scrollOffset)
         }
+        
         
         .overlay(alignment: .topTrailing, content: {
             Button {
@@ -260,7 +264,32 @@ extension View{
         
         return safeArea
     }
+    
+    //MARK: ScrollView Offset
+    func offset(offset: Binding<CGFloat>) -> some View{
+        return self
+            .overlay {
+                GeometryReader { proxy in
+                    let minY = proxy.frame(in: .named("SCROLL")).minY
+                    
+                    Color.clear.preference(key: OffsetKey.self, value: minY)
+                }
+                .onPreferenceChange(OffsetKey.self) { value in
+                    offset.wrappedValue = value
+                }
+        }
+    }
+    
+    
 }
 
+//MARK: Offset Key
+struct OffsetKey: PreferenceKey{
+    static var defaultValue: CGFloat = 0
+    
+    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat){
+        value = nextValue()
+    }
+}
 
 
