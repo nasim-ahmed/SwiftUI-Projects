@@ -8,7 +8,6 @@
 import SwiftUI
 
 //MARK
-
 struct Today: Identifiable{
     var id = UUID().uuidString
     var appName: String
