@@ -11,6 +11,7 @@
 		8111E91B28A0752700D915F7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8111E91A28A0752700D915F7 /* ContentView.swift */; };
 		8111E91D28A0752B00D915F7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8111E91C28A0752B00D915F7 /* Assets.xcassets */; };
 		8111E92028A0752B00D915F7 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8111E91F28A0752B00D915F7 /* Preview Assets.xcassets */; };
+		8192948D28AFB47D00CFF117 /* AppstorePreview.gif in Resources */ = {isa = PBXBuildFile; fileRef = 8192948C28AFB47D00CFF117 /* AppstorePreview.gif */; };
 		81FE85F428A3B2E3004709F7 /* Today.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81FE85F328A3B2E3004709F7 /* Today.swift */; };
 		81FE85F628A3B5F0004709F7 /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81FE85F528A3B5F0004709F7 /* Home.swift */; };
 		81FE85F828A3C31F004709F7 /* CustomCorner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81FE85F728A3C31F004709F7 /* CustomCorner.swift */; };
@@ -22,6 +23,7 @@
 		8111E91A28A0752700D915F7 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		8111E91C28A0752B00D915F7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8111E91F28A0752B00D915F7 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		8192948C28AFB47D00CFF117 /* AppstorePreview.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = AppstorePreview.gif; sourceTree = "<group>"; };
 		81FE85F328A3B2E3004709F7 /* Today.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Today.swift; sourceTree = "<group>"; };
 		81FE85F528A3B5F0004709F7 /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
 		81FE85F728A3C31F004709F7 /* CustomCorner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCorner.swift; sourceTree = "<group>"; };
@@ -57,6 +59,7 @@
 		8111E91728A0752700D915F7 /* AppStoreAnimation */ = {
 			isa = PBXGroup;
 			children = (
+				8192948C28AFB47D00CFF117 /* AppstorePreview.gif */,
 				8111E92728A0754D00D915F7 /* View */,
 				8111E92628A0754600D915F7 /* Model */,
 				8111E91828A0752700D915F7 /* AppStoreAnimationApp.swift */,
@@ -152,6 +155,7 @@
 			files = (
 				8111E92028A0752B00D915F7 /* Preview Assets.xcassets in Resources */,
 				8111E91D28A0752B00D915F7 /* Assets.xcassets in Resources */,
+				8192948D28AFB47D00CFF117 /* AppstorePreview.gif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
