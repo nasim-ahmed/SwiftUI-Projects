@@ -22,8 +22,7 @@ struct ContentView: View {
                         dragAmount = CGSize.zero
                     })
             )
-            
-        
+            .animation(.spring(), value: dragAmount)
     }
 }
 
