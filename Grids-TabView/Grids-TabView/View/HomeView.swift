@@ -9,7 +9,7 @@ import SwiftUI
 
 struct HomeView: View {
     @State private var index = 0
-    let columns = [GridItem(.flexible()), GridItem(.flexible())]
+   
     
     var body: some View {
         NavigationView{
@@ -25,7 +25,11 @@ struct HomeView: View {
                         .background(index == 0 ? Color("TabBackground"): Color.white)
                         .clipShape(Capsule())
                         .onTapGesture {
-                            index = 0
+                            
+                            withAnimation(.default){
+                                index = 0
+                            }
+                            
                         }
                     Spacer(minLength: 0)
                     
@@ -38,7 +42,9 @@ struct HomeView: View {
                         .background(index == 1 ? Color("TabBackground"): Color.white)
                         .clipShape(Capsule())
                         .onTapGesture {
-                            index = 1
+                            withAnimation(.default){
+                                index = 1
+                            }
                         }
                     Spacer(minLength: 0)
                     
@@ -51,28 +57,40 @@ struct HomeView: View {
                         .background(index == 2 ? Color("TabBackground"): Color.white)
                         .clipShape(Capsule())
                         .onTapGesture {
-                            index = 2
+                            withAnimation(.default){
+                                index = 2
+                            }
                         }
                 }
                 .padding(.horizontal)
                 .clipShape(Capsule())
                 
                 //Dashboard Grid
-                LazyVGrid(columns: columns, spacing: 30) {
-                    ForEach(dayFeeds, id: \.self){ feed in
-                        CardView(feed: feed)
+                TabView(selection: self.$index){
+                    GridView(feeds_data: dayFeeds)
+                        .tag(0)
+                    GridView(feeds_data: weekFeeds)
+                        .tag(1)
+                    
+                    VStack{
+                       Text("Month Feed")
+                            
                     }
+                    .tag(2)
+                    
                 }
-                .padding(.top)
-                
-                
-                Spacer(minLength: 100)
+                .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+      
+                Spacer(minLength: 0)
             }
             .navigationTitle("STATS")
+            .padding(.horizontal)
             .padding(.top, 10)
+            
         }
     }
 }
+
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
@@ -99,13 +117,30 @@ struct CardView: View{
                 Spacer(minLength: 0)
                 
                 Text(feed.suggest)
+                    .foregroundColor(.white)
             }
             
         }
         .padding()
         .background(Color(feed.image))
+        .cornerRadius(20)
         
     }
 }
 
 
+
+struct GridView: View {
+    var feeds_data: [Feed]
+    
+    let columns = [GridItem(.flexible()), GridItem(.flexible())]
+    
+    var body: some View {
+        LazyVGrid(columns: columns, spacing: 30) {
+            ForEach(feeds_data, id: \.self){ feed in
+                CardView(feed: feed)
+            }
+        }
+        
+    }
+}
