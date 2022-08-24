@@ -34,8 +34,6 @@ struct ContentView: View {
             })
         )
         
-        
-        
 //        LinearGradient(gradient: Gradient(colors: [.yellow, .red]), startPoint: .top, endPoint: .bottom)
 //            .frame(width: 300, height: 200)
 //            .clipShape(RoundedRectangle(cornerRadius: 10))
@@ -49,9 +47,6 @@ struct ContentView: View {
 //                        }
 //                    })
 //            )
-
-       
-        
             
     }
 }
