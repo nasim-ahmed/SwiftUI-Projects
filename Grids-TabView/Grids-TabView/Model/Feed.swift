@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Feed: Identifiable{
+struct Feed: Hashable,Identifiable{
     let id = UUID()
     let name:String
     let value: String

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct HomeView: View {
     @State private var index = 0
+    let columns = [GridItem(.flexible()), GridItem(.flexible())]
     
     var body: some View {
         NavigationView{
@@ -57,10 +58,18 @@ struct HomeView: View {
                 .clipShape(Capsule())
                 
                 //Dashboard Grid
+                LazyVGrid(columns: columns, spacing: 30) {
+                    ForEach(dayFeeds, id: \.self){ feed in
+                        CardView(feed: feed)
+                    }
+                }
+                .padding(.top)
                 
-                Spacer(minLength: 0)
+                
+                Spacer(minLength: 100)
             }
             .navigationTitle("STATS")
+            .padding(.top, 10)
         }
     }
 }
@@ -68,7 +77,35 @@ struct HomeView: View {
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
         HomeView()
-            .previewDevice("iPhone 12 mini")
+            .previewDevice("iPhone 11")
             
     }
 }
+
+struct CardView: View{
+    let feed: Feed
+    
+    var body: some View{
+        VStack(alignment: .leading, spacing: 15){
+            Text(feed.name)
+                .foregroundColor(.white)
+            
+            Text(feed.value)
+                .font(.title)
+                .fontWeight(.bold)
+                .foregroundColor(.white)
+                .padding(.top, 10)
+            HStack{
+                Spacer(minLength: 0)
+                
+                Text(feed.suggest)
+            }
+            
+        }
+        .padding()
+        .background(Color(feed.image))
+        
+    }
+}
+
+
